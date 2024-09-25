@@ -1,16 +1,12 @@
 const { default: mongoose } = require('mongoose');
 const { JWT_USER_PASSWORD } = require('../config/config');
 const { constants } = require('../config/constants');
-const { userModel, purchaseModel } = require('../model');
+const { userModel, purchaseModel, courseModel } = require('../model');
 const bcrypt = require('bcrypt');
 const userController = {};
 
 userController.createUser = async (req, res) => {
-  const {
-    name,
-    email,
-    password,
-  } = req.body;
+  const { name, email, password } = req.body;
   try {
     const user = await userModel.findOne({ email });
     if (user) {
@@ -103,6 +99,20 @@ userController.purchaseCourse = async (req, res) => {
       .status(500)
       .json({ msg: 'Internal Server Error(purchase Course): ', error });
   }
+};
+
+userController.getUserPurchases = async (req, res) => {
+  const userId = req.userId;
+  const purchasedCourseIds = (await purchaseModel.find({ userId }).lean()).map(
+    (purchase) => purchase.courseId
+  );
+  const coursesData = await courseModel
+    .find({
+      _id: { $in: purchasedCourseIds },
+    })
+    .lean();
+
+  return res.status(200).json({ purchases, coursesData });
 };
 
 module.exports = userController;
