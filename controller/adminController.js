@@ -7,7 +7,7 @@ const { JWT_ADMIN_PASSWORD } = require('../config/config');
 const adminController = {};
 
 adminController.getAllUsers = async (req, res) => {
-  const users = await userModel.find({}).populate('courseId').lean();
+  const users = await userModel.find({}).lean();
   return res.status(200).json({ data: users });
 };
 
@@ -77,7 +77,7 @@ adminController.getAllCourses = async (req, res) => {
 
 adminController.getAllUsersInfo = async (req, res) => {
   try {
-    const users = await userModel.find({}).populate('courseId').lean();
+    const users = await userModel.find({}).lean();
     return res.status(200).json({ data: users });
   } catch (error) {
     return res
