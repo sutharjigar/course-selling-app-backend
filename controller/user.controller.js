@@ -1,7 +1,7 @@
 const { default: mongoose } = require('mongoose');
 const { JWT_USER_PASSWORD } = require('../config/config');
 const { constants } = require('../config/constants');
-const { userModel } = require('../model');
+const { userModel, purchaseModel } = require('../model');
 const bcrypt = require('bcrypt');
 const userController = {};
 
@@ -10,7 +10,6 @@ userController.createUser = async (req, res) => {
     name,
     email,
     password,
-    courseId: [],
   } = req.body;
   try {
     const user = await userModel.findOne({ email });
@@ -19,7 +18,7 @@ userController.createUser = async (req, res) => {
     }
     const hashedPassword = await bcrypt.hash(password, constants.SALT_ROUND);
 
-    await userModel.create({ name, password: hashedPassword, email, courseId });
+    await userModel.create({ name, password: hashedPassword, email });
 
     return res.status(200).json({ msg: 'Done! User created Successfully!!' });
   } catch (error) {
@@ -64,12 +63,11 @@ userController.getUserDetail = async (req, res) => {
 userController.getMyCourses = async (req, res) => {
   const id = req.userId;
   try {
-    const courses = (
-      await userModel
-        .findOne({ _id: new mongoose.Types.ObjectId(`${id}`) })
-        .populate('courseId')
-        .lean()
-    ).map((user) => user.courseId);
+    const courses = await purchaseModel
+      .find({ userId: new mongoose.Types.ObjectId(`${id}`) })
+      .populate('courseId')
+      .lean();
+
     return res.status(200).json({ data: courses });
   } catch (error) {
     return res
@@ -91,6 +89,19 @@ userController.updateUserProfile = async (req, res) => {
     return res
       .status(500)
       .json({ msg: 'Internal Server (update user profile) Error: ', error });
+  }
+};
+
+userController.purchaseCourse = async (req, res) => {
+  const id = req.userId;
+  const { courseId } = req.query;
+  try {
+    await purchaseModel.create({ userId: id, courseId });
+    return res.status(200).json({ msg: 'Done!!' });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ msg: 'Internal Server Error(purchase Course): ', error });
   }
 };
 

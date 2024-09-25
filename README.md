@@ -34,3 +34,10 @@
 ### Recommended Plugins for Visual Studio Code
 
 - Prettier - Code formatter
+
+### For Formatting
+
+```bash
+npm run lint
+npm run format
+```

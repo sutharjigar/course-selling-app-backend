@@ -19,5 +19,6 @@ userRouter.post(
 userRouter.get('/details', userMiddleware, userController.getUserDetail);
 userRouter.get('/courses', userMiddleware, userController.getMyCourses);
 userRouter.put('/update', userMiddleware, userController.updateUserProfile);
+userRouter.post('/purchase', userMiddleware, userController.purchaseCourse);
 
 module.exports = userRouter;
