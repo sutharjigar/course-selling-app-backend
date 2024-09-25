@@ -1,15 +1,18 @@
-const { default: mongoose } = require("mongoose");
+const { default: mongoose } = require('mongoose');
 
-const purchaseSchema = new mongoose.Schema({
+const purchaseSchema = new mongoose.Schema(
+  {
     userId: {
-        type: mongoose.ObjectId,
-        ref: "user",
+      type: mongoose.ObjectId,
+      ref: 'user',
     },
     courseId: {
-        type: mongoose.ObjectId,
-        ref: "course",
+      type: mongoose.ObjectId,
+      ref: 'course',
     },
-},{timestamps:true});
+  },
+  { timestamps: true }
+);
 
-const purchaseModel = mongoose.model("purchase", purchaseSchema);
+const purchaseModel = mongoose.model('purchase', purchaseSchema);
 module.exports = purchaseModel;

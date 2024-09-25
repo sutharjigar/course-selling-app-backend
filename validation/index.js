@@ -1,4 +1,4 @@
-const courseValidators = require("./course.validate");
-const adminValidators = require("./admin.validate")
+const courseValidators = require('./course.validate');
+const adminValidators = require('./admin.validate');
 
-module.exports = { courseValidators, adminValidators }
+module.exports = { courseValidators, adminValidators };

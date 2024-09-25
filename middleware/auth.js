@@ -1,38 +1,35 @@
-const jwt = require("jsonwebtoken");
-const { JWT_ADMIN_PASSWORD } = require("../config/config")
+const jwt = require('jsonwebtoken');
+const { JWT_ADMIN_PASSWORD } = require('../config/config');
 
 function adminMiddleware(req, res, next) {
-    const { token } = req.headers;
-    const decoded = jwt.verify(token, JWT_ADMIN_PASSWORD);
+  const { token } = req.headers;
+  const decoded = jwt.verify(token, JWT_ADMIN_PASSWORD);
 
-    if (decoded) {
-        req.userId = decoded.id;
-        next()
-    } else {
-        res.status(403).json({
-            message: "You are not signed in"
-        })
-    }
-
+  if (decoded) {
+    req.userId = decoded.id;
+    next();
+  } else {
+    res.status(403).json({
+      message: 'You are not signed in',
+    });
+  }
 }
 
 function userMiddleware(req, res, next) {
-    const { token } = req.headers;
-    const decoded = jwt.verify(token, JWT_USER_PASSWORD);
+  const { token } = req.headers;
+  const decoded = jwt.verify(token, JWT_USER_PASSWORD);
 
-    if (decoded) {
-        req.userId = decoded.id;
-        next()
-    } else {
-        res.status(403).json({
-            message: "You are not signed in"
-        })
-    }
-
+  if (decoded) {
+    req.userId = decoded.id;
+    next();
+  } else {
+    res.status(403).json({
+      message: 'You are not signed in',
+    });
+  }
 }
-
 
 module.exports = {
-    adminMiddleware: adminMiddleware,
-    userMiddleware: userMiddleware
-}
+  adminMiddleware: adminMiddleware,
+  userMiddleware: userMiddleware,
+};
