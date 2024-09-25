@@ -14,6 +14,10 @@ adminController.getAllUsers = async (req, res) => {
 adminController.createAdmin = async (req, res) => {
   const { name, email, password } = req.body;
   try {
+    const admin = await adminModel.findOne({ email });
+    if (admin) {
+      return res.status(200).json({ msg: 'Taken email change the email!' });
+    }
     const encryptedPass = await bcrypt.hash(password, constants.SALT_ROUND);
     await adminModel.create({
       name,
