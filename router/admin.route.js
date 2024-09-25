@@ -39,6 +39,5 @@ adminRouter.delete(
 );
 
 // user
-adminRouter.get('/all', courseController.getAllUsersCourses);
 
 module.exports = adminRouter;

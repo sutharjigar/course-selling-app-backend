@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const db = require('./config/db');
 const rateLimit = require('express-rate-limit');
-const { userRouter, courseRouter, adminRouter } = require('./router');
+const { userRouter, adminRouter } = require('./router');
 const { PORT } = require('./config/config');
 const app = express();
 
@@ -18,7 +18,6 @@ app.use(cors());
 app.use(limiter);
 
 app.use('/user', userRouter);
-app.use('/course', courseRouter);
 app.use('/admin', adminRouter);
 
 app.listen(PORT, () => {
