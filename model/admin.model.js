@@ -4,22 +4,22 @@ const adminSchema = new mongoose.Schema(
     {
         name: {
             type: String,
-            require: true,
+            required: true,
         },
         email: {
             type: String,
-            require: true,
+            required: true,
         },
         password: {
             type: String,
-            require: true,
+            required: true,
         },
-        courseId: {
-            type: 'ObjectId',
-            ref: "courses",
-        },
+        courseId: [{
+            type: mongoose.ObjectId,
+            ref: "course",
+        }],
     },
-    { timestamp: true }
+    { timestamps: true }
 );
 
 const adminModel = mongoose.model("admin", adminSchema);
