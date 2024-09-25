@@ -5,7 +5,7 @@ const courseSchema = new mongoose.Schema(
     {
         title: {
             type: String,
-            require: true,
+            required: true,
         },
         description: {
             type: String,
@@ -15,18 +15,18 @@ const courseSchema = new mongoose.Schema(
         },
         price: {
             type: Number,
-            require: true,
+            required: true,
         },
         imageUrl: {
             type: String,
-            require: true
+            required: true
         },
         adminId: {
-            type: 'ObjectId',
-            ref: "admins",
+            type: mongoose.ObjectId,
+            ref: "admin",
         },
     },
-    { timestamp: true }
+    { timestamps: true }
 );
 
 const courseModel = mongoose.model("course", courseSchema);

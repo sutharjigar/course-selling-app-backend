@@ -2,26 +2,26 @@ const { z } = require("zod");
 
 const courseValidators = {};
 
-courseValidators.createCourse = {
+courseValidators.createCourse = z.object({
     duration: z.number(),
     price: z.number(),
     title: z.string().max(200),
     description: z.string().max(200),
     imageUrl: z.string(),
-    agentId: z.string()
-}
+    adminId: z.string()
+})
 
-courseValidators.updateCourse = {
+courseValidators.updateCourse = z.object({
     duration: z.number(),
     price: z.number(),
     title: z.string().max(200),
     description: z.string().max(200),
     imageUrl: z.string(),
     courseId: z.string()
-}
+})
 
-courseValidators.deleteCourse = {
+courseValidators.deleteCourse = z.object({
     courseId: z.number()
-}
+})
 
 module.exports = { courseValidators }
