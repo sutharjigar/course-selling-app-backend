@@ -103,16 +103,21 @@ userController.purchaseCourse = async (req, res) => {
 
 userController.getUserPurchases = async (req, res) => {
   const userId = req.userId;
-  const purchasedCourseIds = (await purchaseModel.find({ userId }).lean()).map(
-    (purchase) => purchase.courseId
-  );
-  const coursesData = await courseModel
-    .find({
-      _id: { $in: purchasedCourseIds },
-    })
-    .lean();
-
-  return res.status(200).json({ purchases, coursesData });
+  try {
+    const purchasedCourseIds = (
+      await purchaseModel.find({ userId }).lean()
+    ).map((purchase) => purchase.courseId);
+    const coursesData = await courseModel
+      .find({
+        _id: { $in: purchasedCourseIds },
+      })
+      .lean();
+    return res.status(200).json({ purchases, coursesData });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ msg: 'Internal Server Error(Get User Purchase): ', error });
+  }
 };
 
 module.exports = userController;
