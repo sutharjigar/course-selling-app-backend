@@ -21,7 +21,7 @@ const courseSchema = new mongoose.Schema(
       required: true,
     },
     adminId: {
-      type: mongoose.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'admin',
     },
   },

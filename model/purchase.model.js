@@ -3,11 +3,11 @@ const { default: mongoose } = require('mongoose');
 const purchaseSchema = new mongoose.Schema(
   {
     userId: {
-      type: mongoose.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'user',
     },
     courseId: {
-      type: mongoose.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'course',
     },
   },

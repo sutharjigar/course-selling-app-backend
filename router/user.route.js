@@ -18,7 +18,12 @@ userRouter.post(
 );
 userRouter.get('/details', userMiddleware, userController.getUserDetail);
 userRouter.get('/courses', userMiddleware, userController.getMyCourses);
-userRouter.put('/update', userMiddleware, userController.updateUserProfile);
+userRouter.put(
+  '/update',
+  userMiddleware,
+  validate(userValidators.updateUser),
+  userController.updateUserProfile
+);
 userRouter.post('/purchase', userMiddleware, userController.purchaseCourse);
 userRouter.get(
   '/user-purchases',
